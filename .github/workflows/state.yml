@@ -1,0 +1,23 @@
+name: Close Stale Pull Requests
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Run every 5 minutes
+
+jobs:
+  close_stale_prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close stale pull requests
+        uses: actions/stale@v5
+        with:
+          stale-issue-message: 'This pull request has been automatically 
+closed because it has been inactive for more than 10 minutes. Please 
+reopen if you still intend to submit this pull request.'
+          days-before-stale: 0  # No days before considering it stale
+          days-before-close: 0  # No days before closing after being stale
+          stale-pr-message: 'This pull request has been marked as stale 
+because it has been inactive for more than 10 minutes. Please update this 
+pull request or it will be automatically closed.'
+          stale-pr-label: stale
+
