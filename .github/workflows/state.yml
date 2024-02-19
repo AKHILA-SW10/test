@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/stale@v9
         with:
-          repo-token: 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
+          repo-token: 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
           stale-issue-message: 'Message to comment on stale issues. If none provided, will not mark issues stale'
           stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
