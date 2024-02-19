@@ -1,8 +1,9 @@
 name: Close Stale Pull Requests
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # Run every 5 minutes #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
+  workflow_dispatch
+  # schedule:
+  #   - cron: '*/5 * * * *'  # Run every 5 minutes #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
 
 jobs:
   stale:
