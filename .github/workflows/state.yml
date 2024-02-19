@@ -14,20 +14,24 @@ jobs:
         with:
           github-token: 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
           script: |
-            const github = context.github;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
+            const github = require('@actions/github');
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            const owner = github.context.repo.owner;
+            const repo = github.context.repo.repo;
 
-            const pulls = await github.pulls.list({owner, repo});
+            const pulls = await octokit.pulls.list({
+              owner: owner,
+              repo: repo
+            });
             const now = new Date();
             const threshold = new Date(now.getTime() - 5 * 60000); // 5 minutes ago
 
             for (const pull of pulls.data) {
               const updated_at = new Date(pull.updated_at);
               if (updated_at < threshold) {
-                await github.pulls.update({
-                  owner,
-                  repo,
+                await octokit.pulls.update({
+                  owner: owner,
+                  repo: repo,
                   pull_number: pull.number,
                   state: 'closed'
                 });
