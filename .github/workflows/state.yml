@@ -9,8 +9,27 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v9
+      - uses: peter-evans/close-pull-requests@v9
         with:
-          #repo-token: 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
+          token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: 'Message to comment on stale issues. If none provided, will not mark issues stale'
           stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
+
+# name: Close Stale Pull Requests
+
+# on:
+#   schedule:
+#     - cron: '*/5 * * * *'  # Run every 5 minutes
+
+# jobs:
+#   close_stale_prs:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Close stale pull requests
+#         uses: peter-evans/close-pull-requests@v9
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           stale-pr-message: 'This pull request has been automatically closed because it has been inactive for more than 10 minutes. Please reopen if you still intend to submit this pull request.'
+#           days-before-stale: 0  # No days before considering it stale
+#           days-before-close: 0  # No days before closing after being stale
+#           stale-pr-label: stale
