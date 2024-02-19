@@ -8,16 +8,28 @@ jobs:
   close_stale_prs:
     runs-on: ubuntu-latest
     steps:
-      - name: Close stale pull requests
-        uses: actions/stale@v5
+      - name: Check and close stale pull requests
+        id: stale-pr-check
+        uses: actions/github-script@v5
         with:
-          stale-issue-message: 'This pull request has been automatically 
-closed because it has been inactive for more than 10 minutes. Please 
-reopen if you still intend to submit this pull request.'
-          days-before-stale: 0  # No days before considering it stale
-          days-before-close: 0  # No days before closing after being stale
-          stale-pr-message: 'This pull request has been marked as stale 
-because it has been inactive for more than 10 minutes. Please update this 
-pull request or it will be automatically closed.'
-          stale-pr-label: stale
+          github-token: ${{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}}
+          script: |
+            const github = context.github;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
 
+            const pulls = await github.pulls.list({owner, repo});
+            const now = new Date();
+            const threshold = new Date(now.getTime() - 5 * 60000); // 5 minutes ago
+
+            for (const pull of pulls.data) {
+              const updated_at = new Date(pull.updated_at);
+              if (updated_at < threshold) {
+                await github.pulls.update({
+                  owner,
+                  repo,
+                  pull_number: pull.number,
+                  state: 'closed'
+                });
+              }
+            }
