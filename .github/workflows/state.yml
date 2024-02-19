@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: actions/stale@v9
         with:
-          repo-token: "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"
+          repo-token: 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
           stale-issue-message: 'Message to comment on stale issues. If none provided, will not mark issues stale'
           stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
