@@ -10,6 +10,7 @@ jobs:
       - name: Close stale pull requests
         uses: treiff/draft-pr-closer@v0.2-alpha
         with:
+          repo-token: ${{github.token}}
           stale-issue-message: 'This pull request has been automatically closed because it has been inactive for more than 14 days. Please reopen if you still intend to submit this pull request.'
           days-before-stale: 0
           days-before-close: 0
